@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styletask.css">
+    <title>Форма обратной связи</title>
+</head>
+<body>
+<header>
+    <nav>
+        <ul class="menu">
+            <div class="container">
+                <li><a href="task3.php">Главная</a></li>
+                <li><a href="task2.php">Новости</a></li>
+                <li><a href="task1.php">Обратная связь</a></li>
+            </div>
+        </ul>
+    </nav>
+</header>
+<main>
+    <section class="wrapper">
+        <div class="container_2">
+            <!-- HTML Форма -->
+            <form method="POST" action="">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="text" name="address" placeholder="Ваш адрес" required>
+                <input type="text" name="phone" placeholder="Ваш телефон" required>
+                <input type="email" name="email" placeholder="Ваш email" required>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </section>
+    <section class="table_content">
+        <div class="container">
+            <table>
+                <tr>
+                    <th>Имя</th>
+                    <th>Адрес</th>
+                    <th>Телефон</th>
+                    <th>Email</th>
+                </tr>
+                <?php foreach ($feedbacks as $feedback): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($feedback['name']); ?></td>
+                    <td><?php echo htmlspecialchars($feedback['address']); ?></td>
+                    <td><?php echo htmlspecialchars($feedback['phone']); ?></td>
+                    <td><?php echo htmlspecialchars($feedback['email']); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

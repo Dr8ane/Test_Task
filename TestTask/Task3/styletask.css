@@ -1,0 +1,147 @@
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+header{
+    background-color:#3d4b53;
+    padding: .6rem 0;
+    width: 100%;
+}
+nav{
+    margin:0 auto;
+    max-width: 1600px;
+    width: 100%;
+    background-color: #3d4b53;
+
+}
+.menu{
+    padding: 0;
+    margin: 0;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:center;
+    list-style-type: none;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:center;
+    list-style-type: none;
+}
+.menu li a {
+    color: #ffffff;
+    background: #94090d;
+    text-decoration: none;
+    align-self: center;
+    font-size: 20px;
+    padding: 10px;
+    transition: background .2s linear;
+    border-radius: 15px;
+    font-family:'Century Gothic';
+    margin-left: 10px;
+}
+.menu li a:hover{
+    background: #6e0609;
+    border-radius: 15px;
+    color: #ffffff;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.container_2 {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="email"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: #333;
+    outline: none;
+}
+
+button {
+    padding: 10px;
+    background-color: #94090d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #6e0609;
+}
+
+.table_content {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.table_content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table_content th,
+.table_content td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .container_2 {
+        width: 100%;
+        padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    button {
+        font-size: 16px;
+    }
+}

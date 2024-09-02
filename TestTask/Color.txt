@@ -1,0 +1,5 @@
+Red HEX: #94090d
+Black HEX: #1c1e1f
+White HEX: #f0f0f0
+DarkRed #6e0609
+Grey #3d4b53
