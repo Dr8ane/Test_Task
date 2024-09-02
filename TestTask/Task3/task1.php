@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 try {
 // Подключение к базе данных
-    $pdo = new PDO('mysql:host=evgens19.beget.tech;dbname=evgens19_test', 'evgens19_test', 'd8Jtpa%l');
+    $pdo = new PDO('mysql:host=localhost;dbname=test_tusk', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Если форма отправлена
