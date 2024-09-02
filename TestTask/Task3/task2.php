@@ -1,6 +1,6 @@
 <?php
 // Подключение к базе данных
-$pdo = new PDO('mysql:host=evgens19.beget.tech;dbname=evgens19_test', 'evgens19_test', 'd8Jtpa%l');
+$pdo = new PDO('mysql:host=localhost;dbname=test_tusk', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Получение данных из базы данных для отображения
