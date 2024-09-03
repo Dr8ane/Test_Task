@@ -3,27 +3,34 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 try {
-// Подключение к базе данных
-    $pdo = new PDO('mysql:host=localhost;dbname=test_tusk', 'root', '');
+    // Подключение к базе данных
+    $pdo = new PDO('mysql:host=evgens19.beget.tech;dbname=evgens19_test', 'evgens19_test', 'd8Jtpa%l');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Если форма отправлена
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['name']) && !empty($_POST['name']) &&
-            isset($_POST['address']) && !empty($_POST['address']) &&
-            isset($_POST['phone']) && !empty($_POST['phone']) &&
-            isset($_POST['email']) && !empty($_POST['email'])) {
+        $name = trim($_POST['name']);
+        $address = trim($_POST['address']);
+        $phone = trim($_POST['phone']);
+        $email = trim($_POST['email']);
+        $addressPattern = "/^г\.\s*[А-Яа-яёЁы\s]+,\s*ул\.\s*[А-Яа-яёЁы\s]+,\s*д\.\s*\d+,\s*кв\.\s*\d+$/";
+
+        if (!empty($name) &&
+            !empty($address) &&
+            !empty($phone) &&
+            !empty($email) &&
+            preg_match($addressPattern, $address)) {
     
             // Подготовка и выполнение запроса
             $stmt = $pdo->prepare("INSERT INTO feedback (name, address, phone, email) VALUES (:name, :address, :phone, :email)");
             $stmt->execute([
-                ':name' => $_POST['name'],
-                ':address' => $_POST['address'],
-                ':phone' => $_POST['phone'],
-                ':email' => $_POST['email'],
+                ':name' => $name,
+                ':address' => $address,
+                ':phone' => $phone,
+                ':email' => $email,
             ]);
         } else {
-            echo "<script>alert('Пожалуйста, заполните все поля.');</script>";
+            echo "<script>alert('Пожалуйста, проверьте все поля и заполните их правильно.');</script>";
         }
     }
     
@@ -31,9 +38,7 @@ try {
     $stmt = $pdo->query("SELECT name, address, phone, email FROM feedback");
     $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-
     echo 'Ошибка подключения: ' . $e->getMessage();
-
 }
 
 ?>
@@ -64,9 +69,9 @@ try {
             <!-- HTML Форма -->
             <form method="POST" action="">
                 <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="text" name="address" placeholder="Ваш адрес" required>
-                <input type="text" name="phone" placeholder="Ваш телефон" required>
-                <input type="email" name="email" placeholder="Ваш email" required>
+                <input type="text" name="address" placeholder="г.Москва, ул.Ленина, д.1, кв.10" required>
+                <input type="text" name="phone" placeholder="+7XXXXXXXXXX" required>
+                <input type="email" name="email" placeholder="example@example.com" required>
                 <button type="submit">Отправить</button>
             </form>
         </div>
@@ -94,5 +99,3 @@ try {
 </main>
 </body>
 </html>
-
-
