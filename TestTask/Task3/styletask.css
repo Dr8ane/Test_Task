@@ -16,36 +16,37 @@ body {
     overflow-x: hidden;
 }
 
-header{
-    background-color:#3d4b53;
+header {
+    background-color: #3d4b53;
     padding: .6rem 0;
     width: 100%;
 }
-nav{
-    margin:0 auto;
+
+nav {
+    margin: 0 auto;
     max-width: 1600px;
     width: 100%;
     background-color: #3d4b53;
-
 }
-.menu{
+
+.menu {
     padding: 0;
     margin: 0;
     height: 50px;
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
-    align-items:center;
+    align-items: center;
     list-style-type: none;
 }
 
-.container{
+.container {
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
-    align-items:center;
-    list-style-type: none;
+    align-items: center;
+    flex-wrap: wrap; /* Позволяет элементам автоматически переноситься */
+    gap: 10px;
 }
+
 .menu li a {
     color: #ffffff;
     background: #94090d;
@@ -55,10 +56,11 @@ nav{
     padding: 10px;
     transition: background .2s linear;
     border-radius: 15px;
-    font-family:'Century Gothic';
-    margin-left: 10px;
+    font-family: 'Century Gothic';
+    margin: 5px; /* Уменьшенный отступ для лучшей адаптации */
 }
-.menu li a:hover{
+
+.menu li a:hover {
     background: #6e0609;
     border-radius: 15px;
     color: #ffffff;
@@ -143,5 +145,25 @@ button:hover {
     input[type="email"],
     button {
         font-size: 16px;
+    }
+
+    .menu {
+        flex-direction: column; /* Вертикальное расположение на мобильных устройствах */
+        height: auto; /* Динамическая высота */
+    }
+
+    .container {
+        flex-direction: column; /* Вертикальное расположение контейнера на мобильных устройствах */
+        align-items: center; /* Растягивает элементы */
+        text-align: center;
+    }
+
+    .menu li {
+        width: 100%; /* Элементы занимают всю ширину */
+    }
+    .menu li a{
+        font-size: 15px;
+        border-radius: 10px;
+        padding: 5px;
     }
 }
