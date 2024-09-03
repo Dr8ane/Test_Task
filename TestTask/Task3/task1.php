@@ -14,12 +14,15 @@ try {
         $phone = trim($_POST['phone']);
         $email = trim($_POST['email']);
         $addressPattern = "/^г\.\s*[А-Яа-яёЁы\s]+,\s*ул\.\s*[А-Яа-яёЁы\s]+,\s*д\.\s*\d+,\s*кв\.\s*\d+$/";
+        $phonePattern = "/^\+7\d{10}$/";
 
         if (!empty($name) &&
             !empty($address) &&
             !empty($phone) &&
             !empty($email) &&
-            preg_match($addressPattern, $address)) {
+            preg_match($addressPattern, $address) &&
+            preg_match($phonePattern, $phone) &&
+            filter_var($email, FILTER_VALIDATE_EMAIL)) {
     
             // Подготовка и выполнение запроса
             $stmt = $pdo->prepare("INSERT INTO feedback (name, address, phone, email) VALUES (:name, :address, :phone, :email)");
