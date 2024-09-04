@@ -45,6 +45,7 @@ nav {
     align-items: center;
     flex-wrap: wrap; /* Позволяет элементам автоматически переноситься */
     gap: 10px;
+
 }
 
 .menu li a {
@@ -131,11 +132,15 @@ button:hover {
 .table_content th,
 .table_content td {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     text-align: left;
+    font-size: 20px;
 }
 
 @media (max-width: 600px) {
+    body{
+        flex-direction: column;
+    }
     .container_2 {
         width: 100%;
         padding: 10px;
@@ -161,9 +166,21 @@ button:hover {
     .menu li {
         width: 100%; /* Элементы занимают всю ширину */
     }
-    .menu li a{
+
+    .menu li a {
         font-size: 15px;
         border-radius: 10px;
         padding: 5px;
+    }
+
+    .table_content table {
+        min-width: 200px; /* Минимальная ширина для маленьких устройств */
+    }
+    .table_content th,
+    .table_content td {
+        font-size: 14px; /* Уменьшите размер шрифта для мобильных устройств */
+        padding: 0; /* Уменьшите отступы в ячейках */
+        line-height: 1.4;
+        border: 2px solid #ddd;
     }
 }
