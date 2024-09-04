@@ -2,9 +2,12 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+$errors = [];
+$name = $address = $phone = $email = ''; // Инициализируем переменные
+
 try {
     // Подключение к базе данных
-    $pdo = new PDO('mysql:host=evgens19.beget.tech;dbname=evgens19_test', 'evgens19_test', 'd8Jtpa%l');
+    $pdo = new PDO('mysql:host=localhost;dbname=test_tusk', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Если форма отправлена
@@ -16,14 +19,20 @@ try {
         $addressPattern = "/^г\.\s*[А-Яа-яёЁы\s]+,\s*ул\.\s*[А-Яа-яёЁы\s]+,\s*д\.\s*\d+,\s*кв\.\s*\d+$/";
         $phonePattern = "/^\+7\d{10}$/";
 
-        if (!empty($name) &&
-            !empty($address) &&
-            !empty($phone) &&
-            !empty($email) &&
-            preg_match($addressPattern, $address) &&
-            preg_match($phonePattern, $phone) &&
-            filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    
+        if (empty($name)) {
+            $errors['name'] = 'Имя не может быть пустым.';
+        }
+        if (empty($address) || !preg_match($addressPattern, $address)) {
+            $errors['address'] = 'Адрес некорректен.';
+        }
+        if (empty($phone) || !preg_match($phonePattern, $phone)) {
+            $errors['phone'] = 'Телефон некорректен.';
+        }
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Email некорректен.';
+        }
+
+        if (empty($errors)) {
             // Подготовка и выполнение запроса
             $stmt = $pdo->prepare("INSERT INTO feedback (name, address, phone, email) VALUES (:name, :address, :phone, :email)");
             $stmt->execute([
@@ -32,8 +41,8 @@ try {
                 ':phone' => $phone,
                 ':email' => $email,
             ]);
-        } else {
-            echo "<script>alert('Пожалуйста, проверьте все поля и заполните их правильно.');</script>";
+            // Сбрасываем поля формы после успешной отправки
+            $name = $address = $phone = $email = ''; 
         }
     }
     
@@ -53,6 +62,14 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="taskstyle.css">
     <title>Форма обратной связи</title>
+    <style>
+        input.incorrect {
+            border: 2px solid red;
+        }
+        input.correct {
+            border: 2px solid green;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -71,10 +88,18 @@ try {
         <div class="container_2">
             <!-- HTML Форма -->
             <form method="POST" action="">
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="text" name="address" placeholder="г.Москва, ул.Ленина, д.1, кв.10" required>
-                <input type="text" name="phone" placeholder="+7XXXXXXXXXX" required>
-                <input type="email" name="email" placeholder="example@example.com" required>
+                <input type="text" name="name" placeholder="Ваше имя" value="<?php echo htmlspecialchars($name); ?>" class="<?php echo isset($errors['name']) ? 'incorrect' : (empty($errors) && !empty($name) ? 'correct' : ''); ?>" required>
+                <span><?php echo $errors['name'] ?? ''; ?></span>
+
+                <input type="text" name="address" placeholder="г.Москва, ул.Ленина, д.1, кв.10" value="<?php echo htmlspecialchars($address); ?>" class="<?php echo isset($errors['address']) ? 'incorrect' : (empty($errors) && !empty($address) ? 'correct' : ''); ?>" required>
+                <span><?php echo $errors['address'] ?? ''; ?></span>
+
+                <input type="text" name="phone" placeholder="+7XXXXXXXXXX" value="<?php echo htmlspecialchars($phone); ?>" class="<?php echo isset($errors['phone']) ? 'incorrect' : (empty($errors) && !empty($phone) ? 'correct' : ''); ?>" required>
+                <span><?php echo $errors['phone'] ?? ''; ?></span>
+
+                <input type="email" name="email" placeholder="example@example.com" value="<?php echo htmlspecialchars($email); ?>" class="<?php echo isset($errors['email']) ? 'incorrect' : (empty($errors) && !empty($email) ? 'correct' : ''); ?>" required>
+                <span><?php echo $errors['email'] ?? ''; ?></span>
+
                 <button type="submit">Отправить</button>
             </form>
         </div>
