@@ -7,7 +7,7 @@ $name = $address = $phone = $email = ''; // Инициализируем пер�
 
 try {
     // Подключение к базе данных
-    $pdo = new PDO('mysql:host=localhost;dbname=test_tusk', 'root', '');
+    $pdo = new PDO('mysql:host=evgens19.beget.tech;dbname=evgens19_test', 'evgens19_test', 'd8Jtpa%l');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Если форма отправлена
@@ -16,13 +16,20 @@ try {
         $address = trim($_POST['address']);
         $phone = trim($_POST['phone']);
         $email = trim($_POST['email']);
+
         $addressPattern = "/^г\.\s*[А-Яа-яёЁы\s]+,\s*ул\.\s*[А-Яа-яёЁы\s]+,\s*д\.\s*\d+,\s*кв\.\s*\d+$/";
+        $addressPattern2 = "/^г\.\s*[\p{Cyrillic}]+,\s*к\.\d+$/u";
+        //$addressPattern = "/^г\.\s*Зеленоград,\s*к\.\d+$/";
+
+
+        
         $phonePattern = "/^\+7\d{10}$/";
 
         if (empty($name)) {
             $errors['name'] = 'Имя не может быть пустым.';
         }
-        if (empty($address) || !preg_match($addressPattern, $address)) {
+        // Проверка адреса по обоим паттернам
+        if (empty($address) || !(preg_match($addressPattern, $address)) && !preg_match($addressPattern2, $address)) {
             $errors['address'] = 'Адрес некорректен.';
         }
         if (empty($phone) || !preg_match($phonePattern, $phone)) {
@@ -45,7 +52,7 @@ try {
             $name = $address = $phone = $email = ''; 
         }
     }
-    
+
     // Получение данных из базы данных для отображения
     $stmt = $pdo->query("SELECT name, address, phone, email FROM feedback");
     $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,7 +67,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="taskstyle.css">
+    <link rel="stylesheet" href="stylesheettask.css">
     <title>Форма обратной связи</title>
     <style>
         input.incorrect {
@@ -91,7 +98,7 @@ try {
                 <input type="text" name="name" placeholder="Ваше имя" value="<?php echo htmlspecialchars($name); ?>" class="<?php echo isset($errors['name']) ? 'incorrect' : (empty($errors) && !empty($name) ? 'correct' : ''); ?>" required>
                 <span><?php echo $errors['name'] ?? ''; ?></span>
 
-                <input type="text" name="address" placeholder="г.Москва, ул.Ленина, д.1, кв.10" value="<?php echo htmlspecialchars($address); ?>" class="<?php echo isset($errors['address']) ? 'incorrect' : (empty($errors) && !empty($address) ? 'correct' : ''); ?>" required>
+                <input type="text" name="address" placeholder="г.Зеленоград, к.357" value="<?php echo htmlspecialchars($address); ?>" class="<?php echo isset($errors['address']) ? 'incorrect' : (empty($errors) && !empty($address) ? 'correct' : ''); ?>" required>
                 <span><?php echo $errors['address'] ?? ''; ?></span>
 
                 <input type="text" name="phone" placeholder="+7XXXXXXXXXX" value="<?php echo htmlspecialchars($phone); ?>" class="<?php echo isset($errors['phone']) ? 'incorrect' : (empty($errors) && !empty($phone) ? 'correct' : ''); ?>" required>
