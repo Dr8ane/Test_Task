@@ -168,7 +168,6 @@ button:hover {
     }
 
     .menu li a {
-        font-size: 15px;
         border-radius: 10px;
         padding: 5px;
     }
@@ -178,7 +177,7 @@ button:hover {
     }
     .table_content th,
     .table_content td {
-        font-size: 14px; /* Уменьшите размер шрифта для мобильных устройств */
+        font-size: 10px; /* Уменьшите размер шрифта для мобильных устройств */
         padding: 0; /* Уменьшите отступы в ячейках */
         line-height: 1.4;
         border: 2px solid #ddd;
